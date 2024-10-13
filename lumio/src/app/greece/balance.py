@@ -2,11 +2,11 @@ from pulp import LpProblem, LpMinimize, LpVariable, LpInteger, LpContinuous, LpS
 
 balances: dict[str, int] = {
     "alex": 95,
-    "joana": 65,
-    "lina": 40,
+    "joana": -65,
+    "lina": -40,
     "mischel": 100,
-    "gonzalo": 200,
-    "andre": 20,
+    "gonzalo": -150,
+    "andre": 60,
 }
 
 problem = LpProblem("who pays who", LpMinimize)
@@ -41,7 +41,7 @@ for person_name, _ in balances.items():
     for another_person_name, _ in balances.items():
         if person_name != another_person_name:
             problem += how_much_who_pays_who_variables[(person_name, another_person_name)] <= \
-                        10 * who_pays_who_variables[(person_name, another_person_name)]  # 10 is a placeholder for a max amount
+                        1000 * who_pays_who_variables[(person_name, another_person_name)]  # Adjusted max amount to 1000 for flexibility
 
 # Constraints for negative balances (debt)
 for person, amount in balances.items():
@@ -74,10 +74,10 @@ status = problem.solve()
 
 assert status == LpStatusOptimal
 
-for vvar in how_much_who_pays_who_variables.values():
-    if vvar.varValue == 0:
-        continue
-    print(f"{vvar}  ---  {vvar.varValue}")
+# Print the result in a readable format
+for (from_person, to_person), vvar in how_much_who_pays_who_variables.items():
+    if vvar.varValue > 0:  # Only print when there's a payment
+        print(f"{from_person.capitalize()} owes {to_person.capitalize()} {vvar.varValue:.2f} EUR")
 
-print(sum(balances.values()))
+print("Sum of balances:", sum(balances.values()))
 
