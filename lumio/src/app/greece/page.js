@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { deployContract, addCoins, getRate } from './script.js';
 
 export default function Greece() {
   const [view, setView] = useState('balances');
@@ -43,7 +44,8 @@ export default function Greece() {
   };
 
   const handleConvertClick = () => {
-    setShowModal(true);
+    // setShowModal(true);
+    setShowModal(!showModal);
   };
 
   const renderContent = () => {
@@ -59,6 +61,11 @@ export default function Greece() {
               <div>
                 <h3 className="text-xl font-semibold text-gray-800">Alex owes:</h3>
                 <p className="text-sm text-gray-600">Total: €{alexOwes}</p>
+              {showModal && (
+                <p className="mt-2 text-sm text-gray-700">
+                  5094.91 XLM
+                </p>
+              )}
               </div>
               <button onClick={handleMarkAsPaid} className="px-4 py-2 bg-blue-600 text-white font-semibold rounded-full shadow-md hover:bg-blue-700 transition-transform duration-200 transform hover:scale-105">
                 Mark as Paid
@@ -76,10 +83,12 @@ export default function Greece() {
               <button onClick={handleConvertClick} className="flex-1 px-4 py-2 bg-green-500 text-white font-semibold rounded-full shadow-md hover:bg-green-600 transition-transform duration-200 transform hover:scale-105">
                 Convert
               </button>
-              <button className="flex-1 px-4 py-2 bg-yellow-500 text-white font-semibold rounded-full shadow-md hover:bg-yellow-600 transition-transform duration-200 transform hover:scale-105">
+              <button className="flex-1 px-4 py-2 bg-yellow-500 text-white font-semibold rounded-full shadow-md hover:bg-yellow-600 transition-transform duration-200 transform hover:scale-105"
+                onClick={deployContract}>
                 Settle
               </button>
-              <button className="flex-1 px-4 py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-transform duration-200 transform hover:scale-105">
+              <button className="flex-1 px-4 py-2 bg-red-500 text-white font-semibold rounded-full shadow-md hover:bg-red-600 transition-transform duration-200 transform hover:scale-105"
+                onClick={addCoins}>
                 Pay
               </button>
             </div>

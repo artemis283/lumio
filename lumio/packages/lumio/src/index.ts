@@ -33,7 +33,7 @@ if (typeof window !== 'undefined') {
 export const networks = {
   testnet: {
     networkPassphrase: "Test SDF Network ; September 2015",
-    contractId: "CCMMXDMVQFZEBNF45VGL5OU37OR6B2O2KFJ3QULJ6D3SHAUXQUA3FQJZ",
+    contractId: "CACRK3OMKRE3WL3YKVFPOHWSN3NE7Z7PFFFOWDUAA7DMZIKZ5OFXUOA6",
   }
 } as const
 
@@ -63,7 +63,7 @@ export interface Client {
   /**
    * Construct and simulate a init transaction. Returns an `AssembledTransaction` object which will have a `result` field containing the result of the simulation. If this transaction changes contract state, you will need to call `signAndSend()` on the returned object.
    */
-  init: ({debts, base_currency}: {debts: Array<Debt>, base_currency: Currency}, options?: {
+  init: ({debts, base_currency}: {debts: Array<readonly [string, string, i128]>, base_currency: Currency}, options?: {
     /**
      * The fee to pay for the transaction. Default: BASE_FEE
      */
@@ -144,7 +144,7 @@ export interface Client {
 export class Client extends ContractClient {
   constructor(public readonly options: ContractClientOptions) {
     super(
-      new ContractSpec([ "AAAAAAAAAAAAAAAEaW5pdAAAAAIAAAAAAAAABWRlYnRzAAAAAAAD6gAAB9AAAAAERGVidAAAAAAAAAANYmFzZV9jdXJyZW5jeQAAAAAAB9AAAAAIQ3VycmVuY3kAAAAA",
+      new ContractSpec([ "AAAAAAAAAAAAAAAEaW5pdAAAAAIAAAAAAAAABWRlYnRzAAAAAAAD6gAAA+0AAAADAAAAEwAAABMAAAALAAAAAAAAAA1iYXNlX2N1cnJlbmN5AAAAAAAH0AAAAAhDdXJyZW5jeQAAAAA=",
         "AAAAAAAAAAAAAAADcGF5AAAAAAMAAAAAAAAABGZyb20AAAATAAAAAAAAAAJ0bwAAAAAAEwAAAAAAAAAHYW1vdW50XwAAAAALAAAAAA==",
         "AAAAAAAAAAAAAAAJcGF5X3dob2xlAAAAAAAAAgAAAAAAAAAEZnJvbQAAABMAAAAAAAAAAnRvAAAAAAATAAAAAA==",
         "AAAAAAAAAAAAAAAIZ2V0X2RlYnQAAAACAAAAAAAAAARmcm9tAAAAEwAAAAAAAAACdG8AAAAAABMAAAABAAAACw==",
