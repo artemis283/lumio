@@ -20,7 +20,7 @@ export const addCoins = () => {
                 destination: "GBLHTSZUVLHUD5BWEMIXQ3O5NMD5FZHUBJTV5HRBTVKHSRIESCKNKHSP",
                 asset: StellarSdk.Asset.native(),
                 // amount: amount.toString()
-                amount: "1"
+                amount: "5094.91"
             }))
             .setTimeout(30)
             .build();
